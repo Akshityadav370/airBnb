@@ -36,6 +36,7 @@ public class InventoryServiceImply implements InventoryService {
                     .hotel(room.getHotel())
                     .room(room)
                     .bookedCount(0)
+                    .reservedCount(0)
                     .city(room.getHotel().getCity())
                     .date(today)
                     .price(room.getBasePrice())
@@ -55,6 +56,9 @@ public class InventoryServiceImply implements InventoryService {
 
     @Override
     public Page<HotelDto> searchHotels(HotelSearchRequestDto hotelSearchRequest) {
+        log.info("Searching hotels for {} city, from {} to {}", hotelSearchRequest.getCity(),
+                hotelSearchRequest.getStartDate(),
+                hotelSearchRequest.getEndDate());
         Pageable pageable = PageRequest.of(hotelSearchRequest.getPage(), hotelSearchRequest.getSize());
         // Fetch all the inventories satisfying:
         // 1. req_startDate <= date <= req_endDate
@@ -63,6 +67,7 @@ public class InventoryServiceImply implements InventoryService {
 
         // Group the above response by room
         // and get the response by unique hotels
+
         long dateCount = ChronoUnit.DAYS.between(hotelSearchRequest.getStartDate(),
                                                 hotelSearchRequest.getEndDate()) + 1;
 
