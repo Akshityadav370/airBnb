@@ -3,7 +3,9 @@ package com.airBnbApp.airBnbApp.service;
 import com.airBnbApp.airBnbApp.dto.RoomDto;
 import com.airBnbApp.airBnbApp.entity.Hotel;
 import com.airBnbApp.airBnbApp.entity.Room;
+import com.airBnbApp.airBnbApp.entity.User;
 import com.airBnbApp.airBnbApp.exception.ResourceNotFoundException;
+import com.airBnbApp.airBnbApp.exception.UnAuthorisedException;
 import com.airBnbApp.airBnbApp.repository.HotelRepository;
 import com.airBnbApp.airBnbApp.repository.RoomRepository;
 import jakarta.transaction.Transactional;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.airBnbApp.airBnbApp.util.AppUtils.getCurrentUser;
 
 @Service
 @Slf4j
@@ -31,6 +35,12 @@ public class RoomServiceImply implements RoomService{
         Hotel hotel = hotelRepository
                 .findById(hotelId)
                 .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with ID: "+hotelId));
+
+        User user = getCurrentUser();
+        if (!user.equals(hotel.getOwner())) {
+            throw new UnAuthorisedException("This user does not own this hotel with id: "+hotelId);
+        }
+
         Room room = modelMapper.map(roomDto, Room.class);
         room.setHotel(hotel);
         room = roomRepository.save(room);
@@ -71,6 +81,12 @@ public class RoomServiceImply implements RoomService{
         Room room = roomRepository
                 .findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found with ID: "+roomId));
+
+        User user = getCurrentUser();
+        if (!user.equals(room.getHotel().getOwner())) {
+            throw new UnAuthorisedException("This user does not own this hotel with id: "+roomId);
+        }
+
         inventoryService.deleteAllInventories(room);
         roomRepository.deleteById(roomId);
     }
