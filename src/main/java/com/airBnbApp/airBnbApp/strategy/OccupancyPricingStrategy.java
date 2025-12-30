@@ -2,11 +2,9 @@ package com.airBnbApp.airBnbApp.strategy;
 
 import com.airBnbApp.airBnbApp.entity.Inventory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-@Service
 @RequiredArgsConstructor
 public class OccupancyPricingStrategy implements PricingStrategy {
     private final PricingStrategy wrapped;
