@@ -43,6 +43,7 @@ public class RoomServiceImply implements RoomService{
 
         Room room = modelMapper.map(roomDto, Room.class);
         room.setHotel(hotel);
+        room.setActive(true);
         room = roomRepository.save(room);
 
         if (hotel.getActive()) {

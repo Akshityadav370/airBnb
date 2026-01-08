@@ -47,7 +47,7 @@ public class PricingServiceImply implements PricingService{
     }
 
     // Scheduler to update the inventory and HotelMinPrice tables every hour
-    // @Scheduled(cron = "*/5 * * * * *")
+//     @Scheduled(cron = "*/5 * * * * *")
     @Scheduled(cron = "0 0 * * * *")
     @Override
     public void updatePrices() {

@@ -49,7 +49,6 @@ public class AuthService {
         ));
 
         User user = (User) authentication.getPrincipal();
-
         String[] arr = new String[2];
         arr[0] = jwtService.generateAccessToken(user);
         arr[1] = jwtService.generateRefreshToken(user);
