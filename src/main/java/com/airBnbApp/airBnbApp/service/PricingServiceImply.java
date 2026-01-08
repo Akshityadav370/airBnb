@@ -107,4 +107,9 @@ public class PricingServiceImply implements PricingService{
         inventoryRepository.saveAll(inventoryList);
     }
 
+    public BigDecimal calculateTotalPrice(List<Inventory> inventoryList) {
+        return inventoryList.stream()
+                .map(this::calculateDynamicPricing)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 }
