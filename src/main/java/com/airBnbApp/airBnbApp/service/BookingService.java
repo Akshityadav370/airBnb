@@ -4,6 +4,7 @@ import com.airBnbApp.airBnbApp.dto.BookingDto;
 import com.airBnbApp.airBnbApp.dto.BookingRequest;
 import com.airBnbApp.airBnbApp.dto.GuestDto;
 import com.airBnbApp.airBnbApp.dto.HotelReportDto;
+import com.airBnbApp.airBnbApp.entity.enums.BookingStatus;
 import com.stripe.model.Event;
 import org.jspecify.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface BookingService {
     BookingDto initialiseBooking(BookingRequest bookingRequest);
 
-    BookingDto addGuests(List<GuestDto> guestDtoList, Long bookingId);
+    BookingDto addGuests(Long bookingId, List<Long> guestIdList);
 
     String initiatePayments(Long bookingId);
 
@@ -22,7 +23,7 @@ public interface BookingService {
 
     void cancelBooking(Long bookingId);
 
-    String getBookingStatus(Long bookingId);
+    BookingStatus getBookingStatus(Long bookingId);
 
     List<BookingDto> getAllBookingsByHotelId(Long hotelId);
 

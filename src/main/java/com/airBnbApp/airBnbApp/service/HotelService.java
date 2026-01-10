@@ -2,6 +2,7 @@ package com.airBnbApp.airBnbApp.service;
 
 import com.airBnbApp.airBnbApp.dto.HotelDto;
 import com.airBnbApp.airBnbApp.dto.HotelInfoDto;
+import com.airBnbApp.airBnbApp.dto.HotelInfoRequestDto;
 import com.airBnbApp.airBnbApp.entity.Booking;
 import com.airBnbApp.airBnbApp.entity.Hotel;
 import org.jspecify.annotations.Nullable;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface HotelService {
     HotelDto createNewHotel(HotelDto hotelDto);
 
-    HotelDto getHotelById(Long id);
+    HotelInfoDto getHotelInfoById(Long hotelId, HotelInfoRequestDto hotelInfoRequestDto);
 
     HotelDto updateHotelById(Long id, HotelDto hotelDto);
 

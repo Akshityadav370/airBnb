@@ -65,7 +65,7 @@ public class InventoryServiceImply implements InventoryService {
     }
 
     @Override
-    public Page<HotelPriceDto> searchHotels(HotelSearchRequestDto hotelSearchRequest) {
+    public Page<HotelPriceResponseDto> searchHotels(HotelSearchRequestDto hotelSearchRequest) {
         log.info("Searching hotels for {} city, from {} to {}", hotelSearchRequest.getCity(),
                 hotelSearchRequest.getStartDate(),
                 hotelSearchRequest.getEndDate());
@@ -93,7 +93,11 @@ public class InventoryServiceImply implements InventoryService {
                 pageable);
 
 //        return hotelPage.map((element) -> modelMapper.map(element, HotelPri.class));
-        return hotelPage;
+        return hotelPage.map(hotelPriceDto -> {
+            HotelPriceResponseDto hotelPriceResponseDto = modelMapper.map(hotelPriceDto.getHotel(), HotelPriceResponseDto.class);
+            hotelPriceResponseDto.setPrice(hotelPriceDto.getPrice());
+            return hotelPriceResponseDto;
+        });
     }
 
     @Override

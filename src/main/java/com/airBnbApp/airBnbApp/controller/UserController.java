@@ -6,6 +6,7 @@ import com.airBnbApp.airBnbApp.dto.ProfileUpdateRequestDto;
 import com.airBnbApp.airBnbApp.dto.UserDto;
 import com.airBnbApp.airBnbApp.service.BookingService;
 import com.airBnbApp.airBnbApp.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class UserController {
     private final BookingService bookingService;
 
     @PatchMapping("/profile")
+    @Operation(summary = "Update the user profile", tags = {"Profile"})
     public ResponseEntity<Void> updateProfile(@RequestBody ProfileUpdateRequestDto profileUpdateRequestDto) {
         userService.updateProfile(profileUpdateRequestDto);
 
@@ -28,11 +30,13 @@ public class UserController {
     }
 
     @GetMapping("/myBookings")
+    @Operation(summary = "Get all my previous bookings", tags = {"Profile"})
     public ResponseEntity<List<BookingDto>> getMyBookings() {
         return ResponseEntity.ok(bookingService.getMyBookings());
     }
 
     @GetMapping("/profile")
+    @Operation(summary = "Get my Profile", tags = {"Profile"})
     public ResponseEntity<UserDto> getMyProfile() {
         return ResponseEntity.ok(userService.getMyProfile());
     }
